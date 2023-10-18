@@ -4,7 +4,6 @@ import com.guner.entity.Product;
 import com.guner.entity.UuidTest;
 import com.guner.repository.ProductRepository;
 import com.guner.repository.UuidTestRepository;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

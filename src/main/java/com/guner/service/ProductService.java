@@ -2,7 +2,7 @@ package com.guner.service;
 
 import com.guner.entity.Product;
 import com.guner.repository.ProductRepository;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

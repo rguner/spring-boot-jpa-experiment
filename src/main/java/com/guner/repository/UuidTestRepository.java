@@ -16,7 +16,7 @@ public interface UuidTestRepository extends JpaRepository<UuidTest, UUID> {
     Optional<UuidTest> findByDetailId(UUID detailId);
 
     // @Query("SELECT uuidTest FROM UuidTest uuidTest WHERE uuidTest.detailId=?1") need to cast as UUID
-    @Query("SELECT uuidTest FROM UuidTest uuidTest WHERE uuidTest.detailId=cast(?1 as uuid)")
+    @Query("SELECT uuidTest FROM UuidTest uuidTest WHERE uuidTest.detailId=?1")
     Optional<UuidTest> findByDetailByStringDetailId(String detailId);
 
     //@Query("SELECT uuidTest FROM UuidTest uuidTest WHERE uuidTest.detailId!=cast(public.uuid_nil() as uuid)")

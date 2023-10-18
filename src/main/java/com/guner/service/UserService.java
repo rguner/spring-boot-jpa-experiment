@@ -2,7 +2,7 @@ package com.guner.service;
 
 import com.guner.entity.User;
 import com.guner.repository.UserRepository;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
