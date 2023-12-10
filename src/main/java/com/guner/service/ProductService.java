@@ -53,4 +53,9 @@ public class ProductService {
     public void deleteProduct(Long productId) {
         productRepository.deleteById(productId);
     }
+
+    public Product getProductByTitleAndPrice(String title, int price) {
+        return productRepository.findByTitleAndPrice(title, price).orElseThrow(() ->
+                new RuntimeException("Not found getProductByTitleAndPrice with title and price = " + title + " " + price));
+    }
 }

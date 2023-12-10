@@ -36,6 +36,13 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
+    @GetMapping("/getProductByTitleAndPrice/{title}/{price}")
+    public ResponseEntity<Product> getProductByTitleAndPrice(@PathVariable("title") String title,
+                                                            @PathVariable("price") int price) {
+        Product product = productService.getProductByTitleAndPrice(title, price);
+        return new ResponseEntity<>(product, HttpStatus.OK);
+    }
+
     // http://localhost:8080/api/products
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts(){
