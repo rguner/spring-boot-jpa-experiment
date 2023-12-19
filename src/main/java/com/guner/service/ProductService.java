@@ -43,9 +43,18 @@ public class ProductService {
 
     public Product updateProduct(Product product) {
         Product existingProduct = productRepository.findById(product.getId()).get();
-        existingProduct.setTitle(product.getTitle());
-        existingProduct.setPrice(product.getPrice());
-        existingProduct.setDescription(product.getDescription());
+        existingProduct.setTitle(existingProduct.getTitle() + " updated");
+        existingProduct.setPrice(existingProduct.getPrice()) ;
+        existingProduct.setDescription(existingProduct.getDescription() + " updated");
+        Product updatedProduct = productRepository.save(existingProduct);
+        return updatedProduct;
+    }
+
+    public Product updateProductWithLock(Product product) {
+        Product existingProduct = productRepository.findByIdWithLocked(product.getId()).get();
+        existingProduct.setTitle(existingProduct.getTitle() + " updated with lock");
+        existingProduct.setPrice(existingProduct.getPrice());
+        existingProduct.setDescription(existingProduct.getDescription() + " updated with lock");
         Product updatedProduct = productRepository.save(existingProduct);
         return updatedProduct;
     }
