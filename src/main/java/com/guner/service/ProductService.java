@@ -5,6 +5,7 @@ import com.guner.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,12 +51,13 @@ public class ProductService {
         return updatedProduct;
     }
 
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
     public Product updateProductWithLock(Product product) {
         Product existingProduct = productRepository.findByIdWithLocked(product.getId()).get();
         existingProduct.setTitle(existingProduct.getTitle() + " updated with lock");
         existingProduct.setPrice(existingProduct.getPrice());
         existingProduct.setDescription(existingProduct.getDescription() + " updated with lock");
-        Product updatedProduct = productRepository.save(existingProduct);
+        Product updatedProduct = productRepository.save(existingProduct); // transactional oldugu içib save demeye gerek yok, farketmez, fieldlara set edersen update olur
         return updatedProduct;
     }
 
