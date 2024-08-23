@@ -61,6 +61,33 @@ public class ProductService {
         return updatedProduct;
     }
 
+    @Transactional(value = Transactional.TxType.REQUIRES_NEW, rollbackOn = Exception.class)
+    public Product updateProductWithLock2(Product product) {
+        Product existingProduct = productRepository.findByIdWithLocked(product.getId()).get();
+        existingProduct.setTitle(existingProduct.getTitle() + " updated with lock2");
+        existingProduct.setPrice(existingProduct.getPrice());
+        existingProduct.setDescription(existingProduct.getDescription() + " updated with lock2");
+        Product updatedProduct = productRepository.save(existingProduct); // transactional oldugu içib save demeye gerek yok, farketmez, fieldlara set edersen update olur
+        if ( 1==1) {
+            throw new RuntimeException("Runtime Exception During Transaction...");
+        }
+        return updatedProduct;
+    }
+
+    @Transactional(value = Transactional.TxType.REQUIRES_NEW, dontRollbackOn = Exception.class)
+    public Product updateProductWithLock3(Product product) {
+        Product existingProduct = productRepository.findByIdWithLocked(product.getId()).get();
+        existingProduct.setTitle(existingProduct.getTitle() + " updated with lock3");
+        existingProduct.setPrice(existingProduct.getPrice());
+        existingProduct.setDescription(existingProduct.getDescription() + " updated with lock3");
+        Product updatedProduct = productRepository.save(existingProduct); // transactional oldugu içib save demeye gerek yok, farketmez, fieldlara set edersen update olur
+        if ( 1==1) {
+            throw new RuntimeException("Runtime Exception During Transaction...");
+        }
+        return updatedProduct;
+    }
+
+
     public void deleteProduct(Long productId) {
         productRepository.deleteById(productId);
     }

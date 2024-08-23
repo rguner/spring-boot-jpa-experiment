@@ -68,6 +68,24 @@ public class ProductController {
         return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
     }
 
+    @PutMapping("/locked2/{id}")
+    // http://localhost:8080/api/products/1
+    public ResponseEntity<Product> updateProductWithLock2(@PathVariable("id") Long productId,
+                                                         @RequestBody Product product){
+        product.setId(productId);
+        Product updatedProduct = productService.updateProductWithLock2(product);
+        return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+    }
+
+    @PutMapping("/locked3/{id}")
+    // http://localhost:8080/api/products/1
+    public ResponseEntity<Product> updateProductWithLock3(@PathVariable("id") Long productId,
+                                                          @RequestBody Product product){
+        product.setId(productId);
+        Product updatedProduct = productService.updateProductWithLock3(product);
+        return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+    }
+
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable("id") Long productId){
         productService.deleteProduct(productId);
