@@ -57,5 +57,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
         p1_0.id=? for share
      */
 
+    @Query(value = "SELECT * FROM Product WHERE id = :id FOR NO KEY UPDATE NOWAIT", nativeQuery = true)
+    Optional<Product> findByIdWithLockedAndNoWait(@Param("id") Long id);
+
 
 }

@@ -2,8 +2,10 @@ package com.guner.service;
 
 import com.guner.entity.Product;
 import com.guner.repository.ProductRepository;
+import jakarta.persistence.PessimisticLockException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 
@@ -87,6 +89,21 @@ public class ProductService {
         return updatedProduct;
     }
 
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
+    public Product updateProductWithLockAndNoWait(Product product) {
+
+        try {
+            Product existingProduct = productRepository.findByIdWithLockedAndNoWait(product.getId()).get();
+            existingProduct.setTitle(existingProduct.getTitle() + " updated with lock and nowait");
+            existingProduct.setPrice(existingProduct.getPrice());
+            existingProduct.setDescription(existingProduct.getDescription() + " updated with lock nowait");
+            Product updatedProduct = productRepository.save(existingProduct); // transactional oldugu içib save demeye gerek yok, farketmez, fieldlara set edersen update olur
+            return updatedProduct;
+        } catch(PessimisticLockingFailureException pessimisticLockingFailureException) {
+            throw new RuntimeException("Pessimistic Lock Exception During Transaction...");
+        }
+
+    }
 
     public void deleteProduct(Long productId) {
         productRepository.deleteById(productId);
